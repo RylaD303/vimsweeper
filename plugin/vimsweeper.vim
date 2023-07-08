@@ -1,0 +1,1 @@
+command! -nargs=? VimSweeper :call vimsweeper#Start(<f-args>)
