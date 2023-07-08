@@ -1,7 +1,7 @@
 function! ClearUnnededBinds()
   mapclear <buffer>
 
-  for key in ['i', 'v', 'c', 'x', 'd']
+  for key in ['i', 'v', 'c', 'x', 'd', 'r', 'f']
     exec 'map <buffer> ' . key . ' <nop>'
     exec 'map <buffer> ' . toupper(key) . ' <nop>'
   endfor
