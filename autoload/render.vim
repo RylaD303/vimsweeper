@@ -5,6 +5,8 @@ function! DrawNumbers(revealed_spaces, numbers)
         while l:j < len(a:numbers[0])
             if a:numbers[l:i][l:j]>0 && a:revealed_spaces[l:i][l:j]==1
                 call DrawNumber(a:numbers[l:i][l:j], [l:i, l:j])
+	    elseif a:revealed_spaces[l:i][l:j]==1
+	        call DrawSpace(l:i, l:j)
             endif
 	    let l:j = l:j + 1
         endwhile
@@ -12,6 +14,10 @@ function! DrawNumbers(revealed_spaces, numbers)
     endwhile
 endfunction
 
+function! DrawSpace(x, y)
+    call cursor(a:x + 2, a:y + 2)
+    normal! r.
+endfunction
 
 function! DrawNumber(number, pos)
     if a:number == 1
@@ -46,6 +52,11 @@ function! DrawNumber(number, pos)
         call cursor(a:pos[0] + 2, a:pos[1] + 2)
         normal! r8
     endif
+endfunction
+
+function! DrawCursor(x, y)
+    call cursor(a:x + 2, a:y + 2)
+    normal! r#
 endfunction
 
 function! SaveAndOpenNewBuffer()

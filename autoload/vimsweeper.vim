@@ -27,7 +27,7 @@ function! vimsweeper#Start( ... )
   call OpenLevel(l:level_path) 
   call SaveAndOpenNewBuffer()
 
-  let s:started = 0
+  let s:started = -1
   let s:game_over = 0
   let s:current_position_x = 1
   let s:current_position_y = 1
@@ -39,31 +39,35 @@ function! vimsweeper#Start( ... )
 endfunction
 
 function! MoveLeft()
-  let s:current_position_y = s:current_position_y - 1
-  if s:current_position_y == 0
-    let s:current_position_y = 1
-  endif
+    let s:current_position_y = s:current_position_y - 1
+    if s:current_position_y == -1
+      let s:current_position_y = 0
+    endif
+    call Update()
 endfunction
 
 function! MoveRight()
     let s:current_position_y = s:current_position_y + 1
-    if s:current_position_y == s:columns+1
-      let s:current_position_y = s:columns
+    if s:current_position_y == s:columns
+      let s:current_position_y = s:columns-1
     endif
+    call Update()
 endfunction
 
 function! MoveUp()
     let s:current_position_x = s:current_position_x -1
-    if s:current_position_x == 0
-      let s:current_position_x = 1
+    if s:current_position_x == -1
+      let s:current_position_x = 0
     endif
+    call Update()
 endfunction
 
 function! MoveDown()
     let s:current_position_x = s:current_position_x + 1
-    if s:current_position_x == s:rows+1
-      let s:current_position_x = s:rows
+    if s:current_position_x == s:rows
+      let s:current_position_x = s:rows-1
     endif
+    call Update()
 endfunction
 
 
@@ -78,7 +82,7 @@ function! Flag()
 endfunction
 
 function Reveal()
-    if index(s:bombs, [s:current_position_x, s:current_position_y]) >= 0
+    if index(s:bombs, [s:current_position_y, s:current_position_x]) >= 0
         let s:game_over = 1
     else
         call RevealSpot()
@@ -106,12 +110,27 @@ function RevealSpot()
 endfunction
 
 function! Update()
+  if s:started < 1
+     let s:started = s:started + 1
+  endif
+  let l:flagged_bombs = 0
+  for flag in s:flags
+     if index(s:bombs, flag) >=0
+        let l:flagged_bombs = l:flagged_bombs + 1
+     endif
+  endfor
+
+  if l:flagged_bombs == len(s:bombs)
+     let s:game_over = 2
+  endif
+
+  call DrawStatus(s:started, s:game_over)
   if s:game_over == 1
     return
   endif
-
   call DrawBorders(s:rows, s:columns)
-  call DrawStatus(s:started, s:game_over)
   call DrawFlags(s:flags)
   call DrawNumbers(s:revealed_spaces,  s:numbers)
+  call DrawCursor(s:current_position_x, s:current_position_y)
+
 endfunction
