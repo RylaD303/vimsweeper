@@ -1,0 +1,44 @@
+*vimsweeper.txt*       Play minesweeper on your vim text editor.
+
+--------------------------------------------------------------------------------
+CONTENTS                                      *vimsweeper* *vimsweeper-contents*
+
+    Installation.........................: |vimsweeper-installation|
+    Usage................................: |vimsweeper-usage|
+        Start a game.....................: |VimsweeperStart|
+
+--------------------------------------------------------------------------------
+INSTALLATION                                           *vimsweeper-installation*
+
+    One way to isntall is with a plugin manager:
+
+    - vim-plug: https://github.com/junegunn/vim-plug
+    - Vundle:   https://github.com/VundleVim/Vundle.vim
+
+    If you use plugin manager follow it's instuctions to install.
+
+    You can install the plugin yourself using Vim's |packages| functionality by
+    cloning the project (or adding it as a submodule) under
+    `~/.vim/pack/<any-name>/start/`. For example:
+>
+        mkdir ~/.vim/pack/RylaD303/start
+        cd ~/.vim/pack/RylaD303/start
+        git clone https://github.com/RylaD303/vimsweeper.git
+<
+    This should automatically load the plugin for you on Vim start.
+---------------------------------------------------------------------------------
+USAGE                                                          *vimsweeper-usage*
+
+---------------------------------------------------------------------------------
+Start a game
+
+:VimsweeperStart                                               *VimsweeperStart*
+    Starts the minesweeper game on a 20x20 map. The rules are the same as the
+    normal minesweeper/.
+
+    Additional game info:
+        - `hjkl` keys are used for movement on the map
+        - `r` to reveal a spot
+        - `f` place a flag
+
+vim:ft=help
