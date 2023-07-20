@@ -64,10 +64,8 @@ function! DrawStatus(started, game_over)
     endif
 endfunction
 
-function! DrawBorders()
+function! DrawBorders(rows, columns)
     silent normal! ggdG
-    let l:rows = 20
-    let l:columns = 20
     let l:space = "|"
     let l:border = "0"
   

@@ -9,3 +9,12 @@ function! InitEvents()
     autocmd BufLeave * autocmd! UpdateGame CursorHold *
   augroup END
 endfunction
+
+
+function! SaveAndOpenNewBuffer()
+  if filereadable(bufname('%'))
+    exec "w"
+  endif
+
+  exec "enew"
+endfunction
